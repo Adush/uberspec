@@ -3,7 +3,7 @@ require 'uberspec'
 Uberspec::Rspec.watch(self) do |config|
   config.code_paths += ['^lib/(.*)\.rb']
   config.spec_paths += ['^spec/(.*)\.']
-  # config.notify 'notify-send' #'growl' #false
+  config.notify = 'LibNotify' #'Growl' #false
 end
 
 

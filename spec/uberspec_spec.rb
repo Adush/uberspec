@@ -20,9 +20,13 @@ describe Uberspec::Base do
       end
 
       it "should use the default config object if no options are given." do
-        @base.config.notify.should == Uberspec::Config.new.notify
+        @base.config.notify.should == false
         @base.config.code_paths.should == Uberspec::Config.new.code_paths
         @base.config.spec_paths.should == Uberspec::Config.new.spec_paths
+      end
+
+      it "should set notifier to false" do
+        @base.notifier.should == false
       end
 
       it "should store the watchr script" do
@@ -35,6 +39,7 @@ describe Uberspec::Base do
         @base = Uberspec::Base.watch(@watchr_script) do |config|
           config.code_paths += ['code/path']
           config.spec_paths = ['spec/path']
+          config.notify = "LibNotify"
         end
       end
 
@@ -44,6 +49,10 @@ describe Uberspec::Base do
 
       it "should overwrite the spec paths" do
         @base.config.spec_paths.should == ['spec/path']
+      end
+
+      it "should set the notifier to lib notify" do
+        @base.notifier.class.should == Uberspec::Notify::LibNotify
       end
     end
 
@@ -81,6 +90,7 @@ describe Uberspec::Base do
 
     context "when no match is found" do
       before(:each) do
+        @base.stub!(:puts)
         @base.stub!(:all_test_files).and_return([])
       end
 
@@ -132,9 +142,27 @@ describe Uberspec::Base do
 
       it "should run the tests" do
         @base.stub(:clear)
-        @base.should_receive(:system).once
+        @base.should_receive(:system_with_notify).once
         @base.run
       end
+
+      it "should run the tests and save the results" do
+        @base.should_receive(:system)
+        @base.system_with_notify('echo test')
+      end
+
+      it "should have the custom IO stuff better tested"
     end
+
+    context "when parsing results" do
+      before(:each) do
+        @results = "string of results"
+      end
+
+      it "should raise an error" do
+        lambda { @base.parse_results(@results) }.should raise_error
+      end
+    end
+
   end
 end

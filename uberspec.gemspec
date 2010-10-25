@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alan Peabody"]
-  s.date = %q{2010-10-24}
+  s.date = %q{2010-10-25}
   s.description = %q{Continious Integration for Rspec using Watchr}
   s.email = %q{gapeabody@gmail.com}
   s.extra_rdoc_files = [
@@ -24,12 +24,24 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "img/failed.png",
+     "img/other.png",
+     "img/passed.png",
+     "img/pending.png",
      "lib/uberspec.rb",
      "lib/uberspec/config.rb",
+     "lib/uberspec/notify.rb",
+     "lib/uberspec/notify/growl.rb",
+     "lib/uberspec/notify/lib_notify.rb",
+     "lib/uberspec/parallel.rb",
      "lib/uberspec/rspec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/uberspec/config_spec.rb",
+     "spec/uberspec/notify/growl_spec.rb",
+     "spec/uberspec/notify/lib_notify_spec.rb",
+     "spec/uberspec/notify_spec.rb",
+     "spec/uberspec/parallel_spec.rb",
      "spec/uberspec/rspec_spec.rb",
      "spec/uberspec_spec.rb",
      "uberspec.gemspec",
@@ -44,6 +56,10 @@ Gem::Specification.new do |s|
     "spec/uberspec_spec.rb",
      "spec/uberspec/rspec_spec.rb",
      "spec/uberspec/config_spec.rb",
+     "spec/uberspec/notify_spec.rb",
+     "spec/uberspec/parallel_spec.rb",
+     "spec/uberspec/notify/lib_notify_spec.rb",
+     "spec/uberspec/notify/growl_spec.rb",
      "spec/spec_helper.rb"
   ]
 

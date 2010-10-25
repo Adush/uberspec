@@ -14,8 +14,14 @@ describe Uberspec::Config do
       @config.spec_paths.length.should == 1
     end
 
-    it "should set the defaul notification library to false" do
+    it "should set the default notification library to false" do
       @config.notify.should == false
+    end
+
+    [:passed, :failed, :pending].each do |status|
+      it "should set the default #{status} image" do
+        @config.send("#{status}_image").should match(/^.*\/#{status}\.png/i)
+      end
     end
   end
 end
