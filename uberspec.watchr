@@ -1,9 +1,9 @@
 require 'uberspec'
 
-Uberspec::Rspec.watch(self) do |config|
+Uberspec::Parallel.watch(self) do |config|
   config.code_paths += ['^lib/(.*)\.rb']
   config.spec_paths += ['^spec/(.*)\.']
-  config.notify = 'LibNotify' #'Growl' #false
+  config.notify = false #'LibNotify' #'Growl' #false
 end
 
 

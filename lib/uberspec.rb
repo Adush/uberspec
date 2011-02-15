@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'stringio'
 require 'uberspec/config'
 require 'uberspec/notify'

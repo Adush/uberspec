@@ -1,8 +1,10 @@
+require 'ruby-debug'
+
 module Uberspec
   class Rspec < Uberspec::Base
 
     def command
-      'spec'
+      @command ||= Gem.loaded_specs['rspec'].version >= Gem::Version.create('2.0') ? 'rspec' : 'spec'
     end
 
     def all_test_files
