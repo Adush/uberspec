@@ -81,13 +81,8 @@ module Uberspec
     end
 
     def system_with_notify(command)
-      #my_io = MyIO.new($stdout)
-      #$stdout = my_io
-      #system(command)
-      #$stdout = my_io.old_io
-      #results = my_io.captured
       if notifier
-        results = %x{#{command}}
+        results = `#{command}`
         notifier.notify(parse_results(results))
         puts results 
       else

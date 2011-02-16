@@ -62,7 +62,7 @@ describe Uberspec::Base do
     end
   end
 
-  context "running files" do
+  context "watching" do
     before(:each) do
       @base = Uberspec::Base.watch(@watchr_script)
     end
@@ -146,12 +146,43 @@ describe Uberspec::Base do
         @base.run
       end
 
-      it "should run the tests and save the results" do
-        @base.should_receive(:system)
-        @base.system_with_notify('echo test')
+      context "without notifications" do
+        it "should run the tests and let the console do its own output" do
+          @base.should_receive(:system).with('echo test')
+          @base.system_with_notify('echo test')
+        end
       end
 
-      it "should have the custom IO stuff better tested"
+      context "with notifications" do
+        before(:each) do
+          @notifier = mock(:notifier, :notify => true)
+          @base.stub(:notifier).and_return(@notifier)
+          @base.stub(:puts).and_return(@notifier)
+          @base.stub(:`).and_return('test')
+          @base.stub(:parse_results).and_return('you win')
+        end
+
+        it "should execute the command" do
+          @base.should_receive(:`).with('echo test')
+          @base.system_with_notify('echo test')
+        end
+        
+        it "should parse the results" do
+          @base.should_receive(:parse_results).with('test')
+          @base.system_with_notify('echo test')
+        end
+
+        it "should pass the results on to the notify" do
+          @notifier.should_receive(:notify).with('you win')
+          @base.system_with_notify('echo test')
+        end
+
+        it "should put the results" do
+          @base.should_receive(:puts).with('test')
+          @base.system_with_notify('echo test')
+        end
+      end
+
     end
 
     context "when parsing results" do
